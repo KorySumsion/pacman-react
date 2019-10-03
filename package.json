@@ -1,6 +1,6 @@
 {
   "name": "pacman-react-korndog",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Pacman game written as a React component",
   "main": "index.js",
   "scripts": {
