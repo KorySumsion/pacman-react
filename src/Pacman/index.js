@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Swipeable } from 'react-swipeable';
 import { EAST, NORTH, WEST, SOUTH } from './constants';
 import getInitialState from './state';
 import { animate, changeDirection } from './game';
@@ -61,9 +62,29 @@ export default class Pacman extends Component {
         clearTimeout(this.timers.animate);
         this.timers.animate = setTimeout(() => this.step(), 20);
     }
+
     changeDirection(direction) {
+        console.log(direction);
         this.setState(changeDirection(this.state, { direction }));
     }
+
+    swiped = event => {
+        if (event.dir === 'Right') {
+            return this.changeDirection(EAST);
+        }
+        if (event.dir === 'Up') {
+            return this.changeDirection(NORTH);
+        }
+        if (event.dir === 'Left') {
+            return this.changeDirection(WEST);
+        }
+        if (event.dir === 'Down') {
+            this.changeDirection(SOUTH);
+        }
+
+        return null;
+    };
+
     render() {
         const { onEnd, ...otherProps } = this.props;
 
@@ -74,13 +95,15 @@ export default class Pacman extends Component {
         ));
 
         return (
-            <div className="pacman">
-                <Board {...props} />
-                <Scores score={this.state.score} lost={this.state.lost} />
-                <AllFood {...props} food={this.state.food} />
-                {monsters}
-                <Player {...props} {...this.state.player} lost={this.state.lost} onEnd={onEnd} />
-            </div>
+            <Swipeable onSwiped={this.swiped}>
+                <div className="pacman">
+                    <Board {...props} />
+                    <Scores score={this.state.score} lost={this.state.lost} />
+                    <AllFood {...props} food={this.state.food} />
+                    {monsters}
+                    <Player {...props} {...this.state.player} lost={this.state.lost} onEnd={onEnd} />
+                </div>
+            </Swipeable>
         );
     }
 }
@@ -89,4 +112,3 @@ Pacman.propTypes = {
     gridSize: PropTypes.number.isRequired,
     onEnd: PropTypes.func
 };
-

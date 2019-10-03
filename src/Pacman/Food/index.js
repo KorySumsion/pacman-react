@@ -10,7 +10,7 @@ export default function Food({ gridSize, position, eaten, big }) {
     const style = cssPosition(position, gridSize);
 
     return (
-        <span className={className} style={style} />
+        <span className={className} style={style}>10</span>
     );
 }
 
@@ -20,4 +20,3 @@ Food.propTypes = {
     eaten: PropTypes.bool.isRequired,
     big: PropTypes.bool.isRequired
 };
-
