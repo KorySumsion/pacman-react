@@ -64,7 +64,6 @@ export default class Pacman extends Component {
     }
 
     changeDirection(direction) {
-        console.log(direction);
         this.setState(changeDirection(this.state, { direction }));
     }
 
